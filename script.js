@@ -1,3 +1,13 @@
+// ----------------------------
+// 頁面載入時，自動填入 localStorage 的日期
+// ----------------------------
+window.addEventListener("load", function () {
+    const savedBirth = localStorage.getItem("dogBirthDate");
+    if (savedBirth) {
+        document.getElementById("dogBirth").value = savedBirth;
+    }
+});
+
 document.getElementById("calcBtn").addEventListener("click", function () {
     const birthStr = document.getElementById("dogBirth").value;
     const resultBox = document.getElementById("resultBox");
@@ -10,6 +20,11 @@ document.getElementById("calcBtn").addEventListener("click", function () {
 
     const birthDate = new Date(birthStr);
     const today = new Date();
+
+    // ----------------------------
+    // 儲存日期到 localStorage
+    // ----------------------------
+    localStorage.setItem("dogBirthDate", birthStr);
 
     // 檢查日期是否大於今天
     if (birthDate > today) {
@@ -66,4 +81,7 @@ document.getElementById("calcBtn").addEventListener("click", function () {
 document.getElementById("resetBtn").addEventListener("click", function () {
     document.getElementById("dogBirth").value = "";
     document.getElementById("resultBox").innerHTML = "";
+
+    // 清除 localStorage 中的日期
+    localStorage.removeItem("dogBirthDate");
 });
